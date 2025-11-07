@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Career Pathfinding Advisor</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.min.js" crossorigin="anonymous"></script>
+    <script>window.pdfjsLib && (window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.2.67/pdf.worker.min.js');</script>
+    <script defer src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
+    <script defer type="module" src="app.js"></script>
+  </head>
+  <body>
+    <div class="bg-gradient" aria-hidden="true"></div>
+    <main class="layout">
+      <header class="hero" role="banner">
+        <span class="hero-badge">AI Career Co-Pilot</span>
+        <h1>Discover Where Your Skills Can Take You</h1>
+        <p>
+          Upload your resume or paste its contents and get curated job titles matched to your technical and soft skills. Perfect for students exploring their next move.
+        </p>
+        <ul class="hero-highlights">
+          <li>Instant skill detection across technical and soft skills</li>
+          <li>Role suggestions with clear reasoning</li>
+          <li>Stays on your device—no data leaves your browser</li>
+        </ul>
+      </header>
+
+      <section class="content-grid">
+        <section class="card form-card" aria-label="Resume analysis form">
+          <form id="resume-form">
+            <fieldset>
+              <legend>Upload or paste your resume</legend>
+
+              <label class="dropzone" id="dropzone">
+                <input type="file" id="resume-file" accept=".pdf,.txt,.text" />
+                <div class="dropzone-inner">
+                  <div class="dropzone-icon" aria-hidden="true">⬆️</div>
+                  <p><strong>Drag & drop</strong> your resume or <span class="link">browse files</span></p>
+                  <p class="dropzone-hint">PDF and TXT formats supported • max 5 MB</p>
+                  <div class="file-chip" id="file-chip" hidden>
+                    <span id="file-name"></span>
+                    <button type="button" id="clear-file" aria-label="Remove selected file">✕</button>
+                  </div>
+                </div>
+              </label>
+
+              <div class="divider" role="presentation">
+                <span>or paste resume text</span>
+              </div>
+
+              <label class="field" for="resume-text">
+                <span>Paste resume text</span>
+                <textarea
+                  id="resume-text"
+                  rows="10"
+                  placeholder="Paste your resume content here. Include your summary, projects, internships, and accomplishments for richer insights."
+                ></textarea>
+              </label>
+            </fieldset>
+            <div class="form-footer">
+              <label style="display:flex;align-items:center;gap:.5rem">
+                <input type="checkbox" id="force-ocr" />
+                <span>Force OCR (use for scanned/image-only PDFs)</span>
+              </label>
+              <div class="tip">
+                <span class="tip-title">Pro tip</span>
+                <p>Add action verbs and metrics (e.g., “Improved API latency by 30%”) to surface more relevant matches.</p>
+              </div>
+              <button type="submit" class="primary" id="analyze-btn">
+                <span class="btn-label">Analyze Resume</span>
+                <span class="btn-spinner" aria-hidden="true"></span>
+              </button>
+            </div>
+          </form>
+
+          <section id="status" class="status" role="status" aria-live="polite"></section>
+        </section>
+
+        <section id="results" class="card results-card" hidden aria-live="polite">
+          <header class="results-header">
+            <h2>Personalized Job Matches</h2>
+            <p id="result-subtitle">Your skill profile and curated suggestions.</p>
+          </header>
+
+          <div class="result-summary" role="presentation">
+            <article class="summary-chip">
+              <span class="summary-label">Tech skills matched</span>
+              <strong id="tech-count">0</strong>
+            </article>
+            <article class="summary-chip">
+              <span class="summary-label">Soft skills matched</span>
+              <strong id="soft-count">0</strong>
+            </article>
+            <article class="summary-chip">
+              <span class="summary-label">Top roles surfaced</span>
+              <strong id="role-count">0</strong>
+            </article>
+          </div>
+
+          <div id="job-list" class="job-grid" aria-label="Suggested job titles"></div>
+
+          <div class="skills-columns">
+            <div>
+              <h3>Technical Skills Identified</h3>
+              <ul id="technical-skills" class="pill-list"></ul>
+            </div>
+            <div>
+              <h3>Soft Skills Identified</h3>
+              <ul id="soft-skills" class="pill-list"></ul>
+            </div>
+          </div>
+
+          <footer class="next-steps">
+            <h4>Next steps</h4>
+            <p>
+              Explore roles that resonate with your interests, then tailor your resume or portfolio to highlight the skills showcased above. Use the recommendations as prompts for informational interviews or targeted job searches.
+            </p>
+          </footer>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>
+
